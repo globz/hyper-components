@@ -44,7 +44,7 @@ value for all of your components.
 
 ```html
 <body hc-dir="/my/components/directory"></body>
-``
+```
 
 You may also override this value per component:
 
