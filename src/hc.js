@@ -54,7 +54,16 @@ const scanDOM = (selector) => {
 const processNodeList = (NodeListToProcess) => {
 	let moduleSpecifier = _moduleSpecifier({});
 	NodeListToProcess.forEach((el) => {
+		// Only process element nodes (not text, comment nodes, etc.)
+		if (el.nodeType !== Node.ELEMENT_NODE) {
+			return;
+		}
+		// Process the element itself
 		processAttributes(el, moduleSpecifier);
+		// Process all nested children with hc-import/hc-define attributes
+		el.querySelectorAll(HC_SELECTOR).forEach((child) => {
+			processAttributes(child, moduleSpecifier);
+		});
 	});
 
 	return moduleSpecifier;
@@ -162,7 +171,7 @@ function _hc_init(fn) {
 
 _hc_init(async function() {
 	let NodeListToProcess = scanDOM(HC_SELECTOR);
-	console.log(NodeListToProcess);
+	console.log('_hc_init', NodeListToProcess);
 	let moduleSpecifier = normalizePath(processNodeList(NodeListToProcess));
 	hc.dispatch(moduleSpecifier);
 	hc.mutations((_NodeListToProcess) => hc.dispatch(normalizePath(processNodeList(_NodeListToProcess))));

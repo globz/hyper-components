@@ -93,5 +93,6 @@ You may use `hc-import`||`hc-define` once for each components then for subsequen
 render your component tag without those attributes, providing that no full page reload did occurred.
 
 ## TODO
-+ catch async/await
-+ Create a function for normalizePath to remove code duplicates
++ [ ] catch async/await
++ [ ] Remove code duplication in normalizePath
++ [X] Fix mutations not scanning for child nodes of parent component
