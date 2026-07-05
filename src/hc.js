@@ -1,7 +1,7 @@
 // Dynamic asynchronous import
 const importAsync = async function* importAsyncIterator(moduleSpecifiers = []) {
 	yield moduleSpecifiers.map(async moduleSpecifier => {
-		return await import(moduleSpecifier);
+		return await import(new URL(moduleSpecifier, window.location.href).href);
 	});
 };
 
@@ -171,7 +171,6 @@ function _hc_init(fn) {
 
 _hc_init(async function() {
 	let NodeListToProcess = scanDOM(HC_SELECTOR);
-	console.log('_hc_init', NodeListToProcess);
 	let moduleSpecifier = normalizePath(processNodeList(NodeListToProcess));
 	hc.dispatch(moduleSpecifier);
 	hc.mutations((_NodeListToProcess) => hc.dispatch(normalizePath(processNodeList(_NodeListToProcess))));
